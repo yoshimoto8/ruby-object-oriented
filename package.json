@@ -1,0 +1,12 @@
+{
+  "name": "ruby-object-oriented",
+  "version": "1.0.0",
+  "description": "objected oriented memo",
+  "main": "index.js",
+  "repository": "git@github.com:yoshimoto8/ruby-object-oriented.git",
+  "author": "吉本光輝",
+  "license": "mit",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
