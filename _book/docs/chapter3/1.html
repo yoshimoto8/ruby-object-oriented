@@ -1,0 +1,574 @@
+
+<!DOCTYPE HTML>
+<html lang="ja" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>依存関係を管理する · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="検索すると入力" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    chapter2 - 単一承認クラスの設計
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter2/1.html">
+            
+                <a href="../chapter2/1.html">
+            
+                    
+                    変更がかんたんな設計
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    chapter2 - 依存関係を管理する
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    依存関係を管理する
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            GitBookで公開 
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >依存関係を管理する</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x3092;&#x7BA1;&#x7406;&#x3093;&#x3059;&#x308B;">&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x3092;&#x7BA1;&#x7406;&#x3093;&#x3059;&#x308B;</h2>
+<p>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x540C;&#x58EB;&#x306E;&#x76F8;&#x4E92;&#x4F5C;&#x7528;&#x3092;&#x306A;&#x304F;&#x3059;&#x3053;&#x3068;&#x306F;&#x3067;&#x304D;&#x306A;&#x3044;&#x3002;&#x3064;&#x307E;&#x308A;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9001;&#x308A;&#x5408;&#x308F;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x3002;&#x306A;&#x305C;&#x306A;&#x3089;&#x4E00;&#x3064;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3067;&#x3059;&#x3079;&#x3066;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3084;&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3092;&#x77E5;&#x308B;&#x3053;&#x3068;&#x306F;&#x3067;&#x304D;&#x306A;&#x3044;&#x304B;&#x3089;&#x3002;</p>
+<p>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306B;&#x671B;&#x307E;&#x308C;&#x308B;&#x632F;&#x308B;&#x821E;&#x3044;&#x306F;&#x3001;</p>
+<ol>
+<li>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x81EA;&#x8EAB;&#x304C;&#x77E5;&#x3063;&#x3066;&#x3044;&#x308B;</li>
+<li>&#x7D99;&#x627F;&#x3057;&#x3066;&#x3044;&#x308B;</li>
+<li>&#x305D;&#x306E;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x7406;&#x89E3;&#x3059;&#x308B;&#x4ED6;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x77E5;&#x3063;&#x3066;&#x3044;&#x308B;</li>
+</ol>
+<p>1&#x756A;&#x306F;&#x524D;&#x306E;&#x7AE0;&#x3067;&#x6271;&#x3063;&#x305F;&#x3002;&#x4ECA;&#x56DE;&#x306F;&#xFF13;&#x756A;&#x76EE;&#x306B;&#x3064;&#x3044;&#x3066;&#x8AAC;&#x660E;&#x3055;&#x308C;&#x308B;</p>
+<h3 id="&#x5171;&#x540C;&#x4F5C;&#x696D;&#x3092;&#x3059;&#x308B;&#x554F;&#x984C;&#x70B9;">&#x5171;&#x540C;&#x4F5C;&#x696D;&#x3092;&#x3059;&#x308B;&#x554F;&#x984C;&#x70B9;</h3>
+<p>&#x5171;&#x540C;&#x4F5C;&#x696D;&#x3092;&#x3059;&#x308B;&#x3053;&#x3068;&#x306F;&#x5F37;&#x529B;&#x3060;&#x304C;&#x3001;&#x3042;&#x308B;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306F;&#x4ED6;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x77E5;&#x3063;&#x3066;&#x3044;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x306E;&#x3067;&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x3092;&#x4F5C;&#x308A;&#x51FA;&#x3057;&#x3066;&#x3057;&#x307E;&#x3046;&#x3002;</p>
+<p>&#x614E;&#x91CD;&#x306B;&#x5BFE;&#x5FDC;&#x3057;&#x306A;&#x3044;&#x3068;&#x3001;&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x304C;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x3092;&#x82E6;&#x3057;&#x3081;&#x3066;&#x304F;&#x308B;&#x3002;</p>
+<p>&#x4E0D;&#x5FC5;&#x8981;&#x306A;&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x306F;&#x300C;&#x5408;&#x7406;&#x6027;&#x300D;&#x3092;&#x5931;&#x3046;&#x3002;&#x300C;&#x5408;&#x7406;&#x6027;&#x3068;&#x306F;&#x4F55;&#x304B;&#xFF1F;&#x300D;</p>
+<ul>
+<li>&#x5408;&#x7406;&#x7684;(Reasonable): &#x3069;&#x3093;&#x306A;&#x5909;&#x66F4;&#x304C;&#x3042;&#x3063;&#x3066;&#x3082;&#x3001;&#x304B;&#x304B;&#x308B;&#x30B3;&#x30B9;&#x30C8;&#x306F;&#x5909;&#x66F4;&#x304C;&#x3082;&#x305F;&#x3089;&#x3059;&#x5229;&#x76CA;&#x306B;&#x3075;&#x3055;&#x308F;&#x3057;&#x3044;&#x3002;</li>
+</ul>
+<h3 id="&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x3068;&#x306F;&#x306A;&#x3093;&#x306A;&#x306E;&#x304B;&#xFF1F;">&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x3068;&#x306F;&#x306A;&#x3093;&#x306A;&#x306E;&#x304B;&#xFF1F;</h3>
+<p>&#xFF12;&#x7AE0;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3067;&#xFF14;&#x3064;&#x306E;&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x304C;&#x3042;&#x308B;</p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, rim, tire)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+    ratio * Wheel.new(rim, tire).diameter
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ratio</span></span>
+    chainring / cog.to_f
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Wheel</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(rim, tire)</span></span>
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">diameter</span></span>
+    rim + (tire * <span class="hljs-number">2</span>)
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+Gear.new(<span class="hljs-number">52</span>, <span class="hljs-number">11</span>, <span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>).gear_inches
+</code></pre>
+<ol>
+<li>&#x4ED6;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x306E;&#x540D;&#x524D;: Gear&#x306F;&#x3001;wheel&#x3068;&#x3044;&#x3046;&#x540D;&#x524D;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x304C;&#x5B58;&#x5728;&#x3057;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x4E88;&#x60F3;&#x3057;&#x3066;&#x3044;&#x308B;</li>
+<li>self&#x4EE5;&#x5916;&#x306E;&#x3069;&#x3053;&#x304B;&#x306B;&#x9001;&#x308D;&#x3046;&#x3068;&#x3059;&#x308B;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;&#x540D;&#x524D;&#x306F;:Gear&#x306F;&#x3001;Wheel&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x304C;diameter&#x306B;&#x5FDC;&#x7B54;&#x3059;&#x308B;&#x3053;&#x3068;&#x3092;&#x4E88;&#x60F3;&#x3057;&#x3066;&#x3044;&#x308B;</li>
+<li>&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x304C;&#x8981;&#x6C42;&#x3059;&#x308B;&#x5F15;&#x6570;&#xFF1A;Gear&#x306F;&#x3001;Wheel.new&#x306B;rim&#x3068;tire&#x304C;&#x5FC5;&#x8981;&#x306A;&#x3053;&#x3068;&#x3092;&#x77E5;&#x3063;&#x3066;&#x3044;&#x308B;</li>
+<li>&#x305D;&#x308C;&#x3089;&#x5F15;&#x6570;&#x306B;&#x9806;&#x756A;:Gear&#x306F;&#x3001;wheel.new&#x306E;&#x6700;&#x521D;&#x306E;&#x5F15;&#x6570;&#x304C;rim&#x3067;&#x3001;&#xFF12;&#x756A;&#x76EE;&#x304C;tire&#x3067;&#x3042;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308B;&#x3053;&#x3068;&#x3092;&#x77E5;&#x3063;&#x3066;&#x3044;&#x308B;</li>
+</ol>
+<h3 id="&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306E;&#x6CE8;&#x5165;object-injection">&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306E;&#x6CE8;&#x5165;(object injection)</h3>
+<p><code>&#x4ED6;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x306B;&#x3001;&#x30AF;&#x30E9;&#x30B9;&#x540D;&#x305D;&#x306E;&#x3082;&#x306E;&#x3067;&#x53C2;&#x7167;&#x3057;&#x3066;&#x3044;&#x308B;&#x3068;&#x3053;&#x308D;&#x306F;&#x3001;&#x7D50;&#x5408;&#x3092;&#x751F;&#x307F;&#x51FA;&#x3059;&#x4E3B;&#x8981;&#x306A;&#x5834;&#x6240;&#x306E;&#xFF11;&#x3064;&#x3067;&#x3059;&#x3002;</code></p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, rim, tire)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+    ratio * Wheel.new(rim, tire).diameter
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ratio</span></span>
+    chainring / cog.to_f
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Wheel</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(rim, tire)</span></span>
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">diameter</span></span>
+    rim + (tire * <span class="hljs-number">2</span>)
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+Gear.new(<span class="hljs-number">52</span>, <span class="hljs-number">11</span>, <span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>).gear_inches
+</code></pre>
+<p>&#x2191; &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x554F;&#x984C;&#x306F; wheel &#x306E;&#x540D;&#x524D;&#x306B;&#x5909;&#x66F4;&#x304C;&#x3042;&#x3063;&#x305F;&#x5834;&#x5408;&#x3001;Gear &#x306E; gear_inches &#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3082;&#x5909;&#x66F4;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308B;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x3002;</p>
+<p>&#x3057;&#x304B;&#x3057;&#x540D;&#x524D;&#x306E;&#x5909;&#x66F4;&#x3078;&#x306E;&#x5BFE;&#x5FDC;&#x306F;&#x6BD4;&#x8F03;&#x7684;&#x5C0F;&#x3055;&#x306A;&#x554F;&#x984C;&#x3002;</p>
+<p>gear &#x304B;&#x3089; wheel &#x3078;&#x306E;&#x53C2;&#x7167;&#x304C;&#x3001;gear_inches &#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x5185;&#x3068;&#x3044;&#x3046;&#x6DF1;&#x3044;&#x3068;&#x3053;&#x308D;&#x3067;&#x30CF;&#x30FC;&#x30C9;&#x30B3;&#x30FC;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x6642;&#x3001;&#x305D;&#x308C;&#x306F;&#x660E;&#x793A;&#x7684;&#x306B;&#x300C;wheel &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30AE;&#x30A2;&#x30A4;&#x30F3;&#x30C1;&#x3057;&#x304B;  &#x8A08;&#x7B97;&#x3059;&#x308B;&#x610F;&#x601D;&#x306F;&#x306A;&#x3044;&#x300D;&#x3068;&#x5BA3;&#x8A00;&#x3057;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x306B;&#x307B;&#x304B;&#x306A;&#x3089;&#x306A;&#x306A;&#x3044;&#x3002;</p>
+<p>&#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x3084;&#x30B7;&#x30EA;&#x30F3;&#x30C0;&#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x304C;&#x3042;&#x3063;&#x305F;&#x5834;&#x5408;</p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, rim, tire)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">desc</span></span>
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Cylinder</span></span>
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+    ratio * Wheel.new(rim, tire).diameter
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+Gear.new(<span class="hljs-number">52</span>, <span class="hljs-number">11</span>, <span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>).gear_inches
+</code></pre>
+<p>diameter&#x306E;&#x5024;&#x3092;&#x77E5;&#x308A;&#x305F;&#x304F;&#x3066;&#x3082;Gear&#x304C;wheel&#x306B;&#x7D50;&#x5408;&#x3057;&#x3066;&#x3044;&#x308B;&#x305F;&#x3081;&#x306B;&#x77E5;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x306A;&#x3044;&#x3002;&#x3082;&#x3061;&#x308D;&#x3093;&#x65B0;&#x3057;&#x304F;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3092;&#x4F5C;&#x308C;&#x3070;&#x8A08;&#x7B97;&#x3059;&#x308B;&#x3053;&#x3068;&#x306F;&#x3067;&#x304D;&#x308B;&#x304C;&#x30FB;&#x30FB;&#x30FB;&#x30FB;</p>
+<p>Gear&#x304C;&#x77E5;&#x3063;&#x3066;&#x3044;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x306E;&#x306F;&#x305F;&#x3060;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;</p>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x304C;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306E;&#x6CE8;&#x5165;(object injection)</p>
+<h2 id="&#x4F9D;&#x5B58;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;">&#x4F9D;&#x5B58;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;</h2>
+<p>&#x3082;&#x3057;&#x4E0D;&#x5FC5;&#x8981;&#x306A;&#x4F9D;&#x5B58;&#x3092;&#x9664;&#x53BB;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x306A;&#x3044;&#x306E;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001;&#x30AF;&#x30E9;&#x30B9;&#x5185;&#x3067;&#x9694;&#x96E2;&#x3059;&#x308B;&#x3079;&#x304D;&#x3002;</p>
+<h3 id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x306E;&#x4F5C;&#x6210;&#x3092;&#x5206;&#x96E2;&#x3059;&#x308B;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x306E;&#x4F5C;&#x6210;&#x3092;&#x5206;&#x96E2;&#x3059;&#x308B;</h3>
+<p><code>&#x5206;&#x96E2;&#x3059;&#x308B;&#x305D;&#x306E;&#xFF11;</code></p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:wheel</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, wheel)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @wheel     = wheel
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+    ratio * wheel.diameter
+  <span class="hljs-keyword">end</span>
+<span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">end</span>
+
+Gear.new(<span class="hljs-number">52</span>, <span class="hljs-number">11</span>, Wheel.new(<span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>)).gear_inches
+</code></pre>
+<p>Gear&#x306E;gear_iches&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x304B;&#x3089;Gear&#x306E;initialize&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x306B;&#x5199;&#x3057;&#x3066;&#x3044;&#x308B;&#x3002;&#x3053;&#x3046;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;gear_inches&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x306F;&#x7DBA;&#x9E97;&#x306B;&#x306A;&#x308A;&#x3001;&#x4F9D;&#x5B58;&#x306F;initilize&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3067;&#x516C;&#x958B;&#x3055;&#x308C;&#x308B;&#x3053;&#x3068;&#x306B;&#x306A;&#x308B;&#x3002;</p>
+<p>&#x3053;&#x3053;&#x3067;&#x6CE8;&#x610F;&#x3059;&#x308B;&#x3079;&#x304D;&#x3053;&#x3068;&#x306F;&#x3001;Gear&#x30AF;&#x30E9;&#x30B9;&#x304C;&#x547C;&#x3070;&#x308C;&#x308B;&#x3068;&#x304D;&#x306B;wheel&#x3082;&#x7121;&#x6761;&#x4EF6;&#x3067;&#x3064;&#x304F;&#x3089;&#x308C;&#x305F;&#x3057;&#x307E;&#x3046;&#x3053;&#x3068;&#x3067;&#x3042;&#x308B;&#x3002;</p>
+<p><code>&#x5206;&#x96E2;&#x3059;&#x308B;&#x4F8B;&#x305D;&#x306E;&#xFF12;</code></p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:rim</span>, <span class="hljs-symbol">:tire</span>, <span class="hljs-symbol">:wheel</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, rim, tire)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @rim       = rim
+    @tire      = tire
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+    ratio * wheel.diameter
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wheel</span></span>
+    @wheel ||= Wheel.new(rim, tire)
+  <span class="hljs-keyword">end</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x4F8B;&#x3067;&#x306F;wheel&#x306E;&#x4F5C;&#x6210;&#x3092;&#x9694;&#x96E2;&#x3057;&#x3001;&#x72EC;&#x81EA;&#x306B;&#x660E;&#x793A;&#x7684;&#x306B;&#x5B9A;&#x7FA9;&#x3057;&#x305F;wheel&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x5185;&#x3067;&#x884C;&#x3046;&#x3088;&#x3046;&#x306B;&#x3057;&#x3066;&#x3044;&#x308B;&#x3002;&#x3053;&#x306E;&#x65B0;&#x3057;&#x3044;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306F;<code>&#x5206;&#x96E2;&#x3059;&#x308B;&#x4F8B;&#x305D;&#x306E;&#xFF11;</code>&#x3068;&#x9055;&#x3063;&#x3066;&#x5FC5;&#x8981;&#x306B;&#x306A;&#x308B;&#x3068;&#x304D;&#x307E;&#x3067;Wheel&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x306A;&#x3044;&#x3002;</p>
+<h3 id="&#x8106;&#x3044;&#x5916;&#x90E8;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;">&#x8106;&#x3044;&#x5916;&#x90E8;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;</h3>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+  ratio * wheel.diameter
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3067;&#x306F;&#x306A;&#x3093;&#x306E;&#x554F;&#x984C;&#x3082;&#x306A;&#x3044;&#x304C;&#x3001;&#x3082;&#x3057;&#x8907;&#x96D1;&#x306A;&#x51E6;&#x7406;&#x3092;&#x52A0;&#x3048;&#x305F;&#x3068;&#x304D;&#x306B;&#x554F;&#x984C;&#x304C;&#x767A;&#x751F;&#x3059;&#x308B;</p>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+  <span class="hljs-comment">#... a few lines of scary math</span>
+  foo = some_intermediate_result * wheel.diameter
+  <span class="hljs-comment">#... more lines of scary math</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p><code>gear_inches</code>&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3092;&#x5909;&#x66F4;&#x305B;&#x3056;&#x308B;&#x3092;&#x5F97;&#x306A;&#x3044;&#x53EF;&#x80FD;&#x6027;&#x3092;&#x6E1B;&#x3089;&#x3059;&#x305F;&#x3081;&#x306B;&#x3067;&#x304D;&#x308B;&#x3053;&#x3068;&#x306F;&#x3001;&#x6B21;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x306B;&#x793A;&#x3059;&#x3068;&#x304A;&#x308A;&#x3001;&#x5916;&#x90E8;&#x7684;&#x306A;&#x4F9D;&#x5B58;&#x3092;&#x53D6;&#x308A;&#x9664;&#x304D;&#x5C02;&#x7528;&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x306A;&#x3044;&#x306B;&#x30AB;&#x30D7;&#x30BB;&#x30EB;&#x5316;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3059;&#x3002;</p>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gear_inches</span></span>
+  <span class="hljs-comment">#... a few lines of scary math</span>
+  foo = some_intermediate_result * diameter
+  <span class="hljs-comment">#... more lines of scary math</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">diameter</span></span>
+  wheel.diameter
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x304C;&#x5FC5;&#x8981;&#x306B;&#x306A;&#x308B;&#x306E;&#x306F;&#x3001;&#x300C;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x300D;&#x3078;&#x306E;&#x53C2;&#x7167;&#x304C;&#x30AF;&#x30E9;&#x30B9;&#x306B;&#x57CB;&#x3081;&#x8FBC;&#x307E;&#x308C;&#x3066;&#x3044;&#x3066;&#x3001;&#x3055;&#x3089;&#x306B;&#x305D;&#x306E;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x304C;&#x5909;&#x308F;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x9AD8;&#x3044;&#x6642;&#x3002;</p>
+<h2 id="&#x5F15;&#x6570;&#x306E;&#x9806;&#x756A;&#x3078;&#x306E;&#x4F9D;&#x5B58;&#x3092;&#x53D6;&#x308A;&#x9664;&#x304F;">&#x5F15;&#x6570;&#x306E;&#x9806;&#x756A;&#x3078;&#x306E;&#x4F9D;&#x5B58;&#x3092;&#x53D6;&#x308A;&#x9664;&#x304F;</h2>
+<p>&#x5F15;&#x6570;&#x304C;&#x5FC5;&#x8981;&#x306A;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9001;&#x308B;&#x3068;&#x304D;&#x3001;&#x9001;&#x308A;&#x624B;&#x5074;&#x3068;&#x3057;&#x3066;&#x306F;&#x3001;&#x305D;&#x308C;&#x3089;&#x5F15;&#x6570;&#x306B;&#x3064;&#x3044;&#x3066;&#x306E;&#x77E5;&#x8B58;&#x3092;&#x6301;&#x305F;&#x305B;&#x306A;&#x3044;&#x3068;&#x3044;&#x3051;&#x307E;&#x305B;&#x3093;&#x3002;&#x3053;&#x306E;&#x4F9D;&#x5B58;&#x306F;&#x907F;&#x3051;&#x3089;&#x308C;&#x306A;&#x3044;&#x3082;&#x306E;&#x3002;</p>
+<p>&#x4E0B;&#x306E;&#x4F8B;&#x3067;&#x3082;<code>&#x6B63;&#x3057;&#x3044;&#x9806;&#x756A;&#x3067;</code>&#x304B;&#x3064;<code>&#x6B63;&#x3057;&#x3044;&#x6570;&#x3067;</code>&#x6E21;&#x3055;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x3002;</p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:wheel</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, wheel)</span></span>
+    @chainring = chainring
+    @cog       = cog
+    @wheel     = wheel
+  <span class="hljs-keyword">end</span>
+  ...
+<span class="hljs-keyword">end</span>
+
+Gear.new(
+  <span class="hljs-number">52</span>,
+  <span class="hljs-number">11</span>,
+  Wheel.new(<span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>)).gear_inches
+</code></pre>
+<h3 id="&#x521D;&#x671F;&#x5316;&#x306E;&#x969B;&#x306E;&#x5F15;&#x6570;&#x306B;&#x30CF;&#x30C3;&#x30B7;&#x30E5;&#x3092;&#x4F7F;&#x3046;">&#x521D;&#x671F;&#x5316;&#x306E;&#x969B;&#x306E;&#x5F15;&#x6570;&#x306B;&#x30CF;&#x30C3;&#x30B7;&#x30E5;&#x3092;&#x4F7F;&#x3046;</h3>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:wheel</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(args)</span></span>
+    @chainring = args[<span class="hljs-symbol">:chainring</span>]
+    @cog       = args[<span class="hljs-symbol">:cog</span>]
+    @wheel     = args[<span class="hljs-symbol">:wheel</span>]
+  <span class="hljs-keyword">end</span>
+  ...
+<span class="hljs-keyword">end</span>
+
+Gear.new(
+  <span class="hljs-symbol">:chainring</span> =&gt; <span class="hljs-number">52</span>,
+  <span class="hljs-symbol">:cog</span>       =&gt; <span class="hljs-number">11</span>,
+  <span class="hljs-symbol">:wheel</span>     =&gt; Wheel.new(<span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>)).gear_inches
+</code></pre>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x306B;&#x306F;&#x3044;&#x304F;&#x3064;&#x304B;&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x304C;&#x5B58;&#x5728;&#x3059;&#x308B;&#x3002;&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x305D;&#x306E;&#xFF11;&#x306F;&#x3001;&#x5F15;&#x6570;&#x306E;&#x9806;&#x756A;&#x306B;&#x5BFE;&#x3059;&#x308B;&#x4F9D;&#x5B58;&#x304C;&#x3059;&#x3079;&#x3066;&#x53D6;&#x308A;&#x9664;&#x304B;&#x308C;&#x3066;&#x3044;&#x308B;&#x70B9;&#x3002;</p>
+<p>&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x305D;&#x306E;&#xFF12;&#x306F;&#x3001;&#x30CF;&#x30C3;&#x30B7;&#x30E5;&#x5185;&#x306E;&#x300C;&#x30AD;&#x30FC;&#x300D;&#x540D;&#x304C;&#x5F15;&#x6570;&#x306B;&#x95A2;&#x3059;&#x308B;&#x660E;&#x793A;&#x7684;&#x306A;&#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;&#x3068;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;&#x70B9;&#x3002;</p>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x3092;&#x4F7F;&#x3046;&#x6642;&#x306F;&#x3069;&#x3093;&#x306A;&#x5834;&#x5408;&#x306A;&#x306E;&#x304B;&#xFF1F;&#x3082;&#x3057;&#x5F15;&#x6570;&#x304C;&#xFF12;&#x3064;&#x3068;&#x304B;&#x306A;&#x3089;&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x3092;&#x4F7F;&#x3046;&#x5FC5;&#x8981;&#x306F;&#x306A;&#x3044;&#x3002;&#x305D;&#x306E;&#x4E00;&#x65B9;&#x5F15;&#x6570;&#x304C;&#x591A;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x3092;&#x4F7F;&#x3046;&#x3079;&#x304D;&#x3002;</p>
+<h3 id="&#x660E;&#x793A;&#x7684;&#x306B;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x5024;&#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;">&#x660E;&#x793A;&#x7684;&#x306B;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x5024;&#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;</h3>
+<pre><code class="lang-ruby">  <span class="hljs-comment"># specifying defaults using ||</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(args)</span></span>
+    @chainring = args[<span class="hljs-symbol">:chainring</span>] || <span class="hljs-number">40</span>
+    @cog       = args[<span class="hljs-symbol">:cog</span>]       || <span class="hljs-number">18</span>
+    @wheel     = args[<span class="hljs-symbol">:wheel</span>]
+  <span class="hljs-keyword">end</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x306E;&#x6CE8;&#x610F;&#x70B9;&#x306F;&#x3001;&#x4E00;&#x5B9A;&#x306E;&#x72B6;&#x6CC1;&#x4E0B;&#x3067;&#x306F;&#x671F;&#x5F85;&#x901A;&#x308A;&#x306E;&#x52D5;&#x304D;&#x3092;&#x3057;&#x306A;&#x3044;&#x5834;&#x5408;&#x304C;&#x3042;&#x308B;&#x3002;||&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x306F;&#x3001;or&#x6F14;&#x7B97;&#x5B50;&#x3068;&#x540C;&#x69D8;&#x306B;&#x52D5;&#x4F5C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x2193;&#x306E;&#x5834;&#x5408;</p>
+<pre><code class="lang-ruby">@bool = args[<span class="hljs-symbol">:boolean_thing</span>] || <span class="hljs-keyword">true</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x5834;&#x5408;false&#x3067;&#x3082;true&#x304C;&#x8FD4;&#x3063;&#x3066;&#x6765;&#x3066;&#x3057;&#x307E;&#x3046;&#x3002;&#x3053;&#x306E;&#x5834;&#x5408;<code>fetch&#x30E1;&#x30BD;&#x30C3;&#x30C8;</code>&#x3092;&#x4F7F;&#x3046;&#x3068;&#x3044;&#x3044;&#x3002;</p>
+<pre><code class="lang-ruby"> <span class="hljs-comment"># specifying defaults using fetch</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(args)</span></span>
+    @chainring = args.fetch(<span class="hljs-symbol">:chainring</span>, <span class="hljs-number">40</span>)
+    @cog       = args.fetch(<span class="hljs-symbol">:cog</span>, <span class="hljs-number">18</span>)
+    @wheel     = args[<span class="hljs-symbol">:wheel</span>]
+  <span class="hljs-keyword">end</span>
+</code></pre>
+<p>&#x3053;&#x306E;&#x30C6;&#x30AF;&#x30CB;&#x30C3;&#x30AF;&#x306F;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x306E;&#x5024;&#x304C;<code>&#x8907;&#x96D1;&#x3067;&#x306F;&#x306A;&#x3044;&#x6642;</code>&#x306B;&#x4F7F;&#x3046;&#x3002;&#x3082;&#x3057;&#x8907;&#x96D1;&#x306A;&#x5834;&#x5408;&#x306F;merge&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3092;&#x4F7F;&#x3046;&#x3002;</p>
+<pre><code class="lang-ruby"><span class="hljs-comment"># specifying defaults by merging a defaults hash</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(args)</span></span>
+    args = defaults.merge(args)
+    @chainring = args[<span class="hljs-symbol">:chainring</span>]
+<span class="hljs-comment">#   ...</span>
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">defaults</span></span>
+    {<span class="hljs-symbol">:chainring</span> =&gt; <span class="hljs-number">40</span>, <span class="hljs-symbol">:cog</span> =&gt; <span class="hljs-number">18</span>}
+  <span class="hljs-keyword">end</span>
+</code></pre>
+<h3 id="&#x8907;&#x6570;&#x306E;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x30FC;&#x3092;&#x7528;&#x3044;&#x305F;&#x521D;&#x671F;&#x5316;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;&#x3002;">&#x8907;&#x6570;&#x306E;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x30FC;&#x3092;&#x7528;&#x3044;&#x305F;&#x521D;&#x671F;&#x5316;&#x3092;&#x9694;&#x96E2;&#x3059;&#x308B;&#x3002;</h3>
+<pre><code class="lang-ruby"><span class="hljs-comment"># When Gear is part of an external interface</span>
+<span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">SomeFramework</span></span>
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gear</span></span>
+    <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:chainring</span>, <span class="hljs-symbol">:cog</span>, <span class="hljs-symbol">:wheel</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(chainring, cog, wheel)</span></span>
+      @chainring = chainring
+      @cog       = cog
+      @wheel     = wheel
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-comment"># ...</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment"># wrap the interface to protect yourself from changes</span>
+<span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">GearWrapper</span></span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">self</span>.<span class="hljs-title">gear</span><span class="hljs-params">(args)</span></span>
+    <span class="hljs-symbol">SomeFramework:</span><span class="hljs-symbol">:Gear</span>.new(args[<span class="hljs-symbol">:chainring</span>],
+                            args[<span class="hljs-symbol">:cog</span>],
+                            args[<span class="hljs-symbol">:wheel</span>])
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment"># Now you can create a new Gear using an arguments hash.</span>
+GearWrapper.gear(
+  <span class="hljs-symbol">:chainring</span> =&gt; <span class="hljs-number">52</span>,
+  <span class="hljs-symbol">:cog</span>       =&gt; <span class="hljs-number">11</span>,
+  <span class="hljs-symbol">:wheel</span>     =&gt; Wheel.new(<span class="hljs-number">26</span>, <span class="hljs-number">1.5</span>)).gear_inches
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"依存関係を管理する","level":"1.3.1","depth":2,"previous":{"title":"chapter2 - 依存関係を管理する","level":"1.3","depth":1,"ref":"","articles":[{"title":"依存関係を管理する","level":"1.3.1","depth":2,"path":"docs/chapter3/1.md","ref":"docs/chapter3/1.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-sharing","hide-published-with","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"hide-published-with":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"ja","gitbook":"*"},"file":{"path":"docs/chapter3/1.md","mtime":"2018-08-26T03:36:35.441Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-26T03:44:53.489Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-hide-published-with/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

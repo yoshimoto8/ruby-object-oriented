@@ -105,7 +105,7 @@
                 <span>
             
                     
-                    Ruby の基本をおさらい
+                    chapter2 - 単一承認クラスの設計
             
                 </span>
             
@@ -114,12 +114,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="../ruby-grammer/1.html">
+        <li class="chapter active" data-level="1.2.1" data-path="1.html">
             
-                <a href="../ruby-grammer/1.html">
+                <a href="1.html">
             
                     
-                    クラス
+                    変更がかんたんな設計
             
                 </a>
             
@@ -137,7 +137,7 @@
                 <span>
             
                     
-                    chapter1 - オブジェクト思考の 3 大要素
+                    chapter2 - 依存関係を管理する
             
                 </span>
             
@@ -146,70 +146,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../chapter1/1.html">
+        <li class="chapter " data-level="1.3.1" data-path="../chapter3/1.html">
             
-                <a href="../chapter1/1.html">
-            
-                    
-                    クラス化
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../chapter1/2.html">
-            
-                <a href="../chapter1/2.html">
+                <a href="../chapter3/1.html">
             
                     
-                    ポリモーフィズム
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="../chapter1/3.html">
-            
-                <a href="../chapter1/3.html">
-            
-                    
-                    継承
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" >
-            
-                <span>
-            
-                    
-                    chapter2 - 単一承認クラスの設計
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter active" data-level="1.4.1" data-path="1.html">
-            
-                <a href="1.html">
-            
-                    
-                    変更がかんたんな設計
+                    依存関係を管理する
             
                 </a>
             
@@ -283,6 +225,51 @@
 <li>Exeamplary(&#x6A21;&#x7BC4;&#x7684;): &#x65B0;&#x3057;&#x304F;&#x5909;&#x66F4;&#x3092;&#x52A0;&#x3048;&#x308B;&#x4EBA;&#x304C;&#x3001;&#x4E0A;&#x8A18;&#x306E;&#x54C1;&#x8CEA;&#x306B;&#x4F34;&#x3063;&#x305F;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x66F8;&#x3051;&#x308B;&#x3088;&#x3046;&#x306A;&#x74B0;&#x5883;&#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;</li>
 </ol>
 <p>Transparet,Reasonable,Usable,Exeamplary &#x306A;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x66F8;&#x304F;&#x305F;&#x3081;&#x306B;&#x306F;&#x3001;&#x305D;&#x308C;&#x305E;&#x308C;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x304C;&#x660E;&#x78BA;&#x306B;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x305F;&#x5358;&#x4E00;&#x306E;&#x8CAC;&#x4EFB;&#x3092;&#x6301;&#x3064;&#x3088;&#x3046;&#x306B;&#x5FB9;&#x5E95;&#x3057;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x3002;</p>
+<h2 id="&#x5358;&#x4E00;&#x627F;&#x8A8D;&#x30AF;&#x30E9;&#x30B9;&#x3092;&#x4F5C;&#x308B;">&#x5358;&#x4E00;&#x627F;&#x8A8D;&#x30AF;&#x30E9;&#x30B9;&#x3092;&#x4F5C;&#x308B;</h2>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Trip</span></span>
+  <span class="hljs-keyword">attr_reader</span> <span class="hljs-symbol">:price</span>, <span class="hljs-symbol">:tax</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(price, tax)</span></span>
+    @price = price
+    @tax = tax
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">trip_price</span></span>
+    price * tax
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+
+p Trip.new(<span class="hljs-number">3000</span>, <span class="hljs-number">1.08</span>).trip_price
+p Trip.new(<span class="hljs-number">5000</span>, <span class="hljs-number">1.08</span>).trip_price
+</code></pre>
+<h2 id="&#x306A;&#x305C;&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x304C;&#x91CD;&#x8981;&#x306A;&#x306E;&#x304B;&#xFF1F;">&#x306A;&#x305C;&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x304C;&#x91CD;&#x8981;&#x306A;&#x306E;&#x304B;&#xFF1F;</h2>
+<p>&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x306F;&#x306A;&#x305C;&#x5FC5;&#x8981;&#x306A;&#x3093;&#x304B;&#x304B;&#x3089;&#x8AAC;&#x660E;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;&#x306A;&#x305C;&#x5FC5;&#x8981;&#x304B;&#x3068;&#x8A00;&#x3046;&#x3068;&#x5148;&#x307B;&#x3069;&#x8AAC;&#x660E;&#x3057;&#x305F;&#x300C;Transparet&#x300D;&#x300C;Reasonable&#x300D;&#x300C;Usable&#x300D;&#x300C;Exeamplary&#x300D;&#x3092;&#x5B9F;&#x73FE;&#x3055;&#x305B;&#x308B;&#x305F;&#x3081;</p>
+<p>&#x7279;&#x306B;&#x300C;Usable&#x300D;&#x5909;&#x66F4;&#x304C;  &#x304B;&#x3093;&#x305F;&#x3093;&#x306A;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x3092;  &#x5B9F;&#x88C5;&#x3059;&#x308B;&#x305F;&#x3081;&#x3067;&#x3059;&#x3002;&#x5909;&#x66F4;&#x304C;&#x304B;&#x3093;&#x305F;&#x3093;&#x306A;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x3068;&#x306F;&#x3001;&#x518D;&#x5229;&#x7528;&#x304C;&#x304B;&#x3093;&#x305F;&#x3093;&#x306A;&#x30AF;&#x30E9;&#x30B9;&#x304B;&#x3089;&#x69CB;&#x6210;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;&#x518D;&#x5229;&#x7528;&#x304C;&#x304B;&#x3093;&#x305F;&#x3093;&#x3068;&#x306F;&#x3001;&#x7740;&#x8131;&#x53EF;&#x80FD;&#x306A;&#x30E6;&#x30CB;&#x30C3;&#x30C8;&#x3067;&#x3059;&#x3002;</p>
+<p>&#x660E;&#x78BA;&#x306B;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x305F;&#x632F;&#x308B;&#x821E;&#x3044;&#x304B;&#x3089;&#x6210;&#x308A;&#x3001; &#x5468;&#x308A;&#x3068;&#x306E;&#x4F9D;&#x5B58;&#x95A2;&#x4FC2;&#x306F;&#x308F;&#x305A;&#x304B;&#x3057;&#x304B;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<p>&#x305D;&#x306E;&#x4E00;&#x65B9;&#xFF12;&#x3064;&#x4EE5;&#x4E0A;&#x306E;&#x8CAC;&#x4EFB;&#x3092;&#x6301;&#x3064;&#x30AF;&#x30E9;&#x30B9;&#x306F;&#x3001;&#x304B;&#x3093;&#x305F;&#x3093;&#x306B;&#x306F;&#x518D;&#x5229;&#x7528;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x96E3;&#x3057;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h2 id="&#x3069;&#x3046;&#x3084;&#x3063;&#x3066;&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x304B;&#x3069;&#x3046;&#x304B;&#x898B;&#x6975;&#x3081;&#x308B;&#x306E;&#x304B;&#xFF1F;">&#x3069;&#x3046;&#x3084;&#x3063;&#x3066;&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x304B;&#x3069;&#x3046;&#x304B;&#x898B;&#x6975;&#x3081;&#x308B;&#x306E;&#x304B;&#xFF1F;</h2>
+<ol>
+<li>&#x3042;&#x305F;&#x304B;&#x3082;&#x305D;&#x308C;&#x306B;&#x77E5;&#x899A;&#x304C;&#x3042;&#x308B;&#x304B;&#x306E;&#x3088;&#x3046;&#x306B;&#x4EEE;&#x5B9A;&#x3057;&#x3066;&#x554F;&#x3044;&#x305F;&#x3060;&#x3059;</li>
+<li>&#x30AF;&#x30E9;&#x30B9;&#x3092; 1 &#x6587;&#x3067;&#x8AAC;&#x660E;&#x3057;&#x3066;&#x307F;&#x308B;&#x3002;</li>
+</ol>
+<h2 id="&#x5909;&#x66F4;&#x3092;&#x6B53;&#x8FCE;&#x3059;&#x308B;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x66F8;&#x304F;">&#x5909;&#x66F4;&#x3092;&#x6B53;&#x8FCE;&#x3059;&#x308B;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x66F8;&#x304F;</h2>
+<p>&#x632F;&#x308B;&#x821E;&#x3044;&#x306F;&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x306B;&#x6349;&#x3048;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x3067;&#x3001;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9001;&#x308B;&#x3053;&#x3068;&#x306B;&#x3088;&#x3063;&#x3066;  &#x5B9F;&#x884C;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#x3002;&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x3092;&#x4F5C;&#x308B;&#x3053;&#x3068;&#x306B;&#x3088;&#x3063;&#x3066;&#x3001;&#x3069;&#x3093;&#x306A;&#x632F;&#x308B;&#x821E;&#x3044;&#x3082;&#x4E00;&#x7B87;&#x6240;&#x306E;&#x307F;&#x5B58;&#x5728;&#x3059;&#x308B;&#x3053;&#x3068;&#x306B;&#x306A;&#x308A;&#x3001;&#x5909;&#x66F4;&#x304C;&#x3042;&#x3063;&#x3066;&#x3082;&#x305F;&#x3060;&#x4E00;&#x7B87;&#x6240;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x5909;&#x66F4;&#x3059;&#x308C;&#x3070;&#x3044;&#x3044;&#x3060;&#x3051;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x632F;&#x308B;&#x821E;&#x3044;&#x306B;&#x52A0;&#x3048;&#x3066;  &#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306F;&#x30C7;&#x30FC;&#x30BF;&#x3092;&#x6301;&#x3061;&#x307E;&#x3059;&#x3002;&#x4F8B;&#x3048;&#x3070;&#x4EFB;&#x610F;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x304C;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x5185;&#x306B;&#x4FDD;&#x6301;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x306F;&#xFF12;&#x3064;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;&#x4E00;&#x3064;&#x76EE;&#x306F;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x3092;&#x76F4;&#x63A5;&#x53C2;&#x7167;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3002;&#xFF12;&#x3064;&#x76EE;&#x306F;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x3092;&#x30A2;&#x30AF;&#x30BB;&#x30C3;&#x30B5;&#x30E1;&#x30BD;&#x30C3;&#x30C8;&#x3067;&#x5305;&#x307F;&#x96A0;&#x3059;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Trip</span></span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(price, tax)</span></span>
+    @price = price
+    @tax = tax
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">trip_price</span></span>
+    @price * @tax
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<h2 id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x306E;&#x96A0;&#x853D;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x5909;&#x6570;&#x306E;&#x96A0;&#x853D;</h2>
+<h2 id="&#x30C7;&#x30FC;&#x30BF;&#x69CB;&#x9020;&#x306E;&#x96A0;&#x853D;">&#x30C7;&#x30FC;&#x30BF;&#x69CB;&#x9020;&#x306E;&#x96A0;&#x853D;</h2>
+<h2 id="&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x306B;&#x3059;&#x308B;">&#x5358;&#x4E00;&#x8CAC;&#x4EFB;&#x306B;&#x3059;&#x308B;</h2>
 <h2 id="&#x53C2;&#x7167;">&#x53C2;&#x7167;</h2>
 <p><a href="https://www.amazon.co.jp/%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E8%A8%AD%E8%A8%88%E5%AE%9F%E8%B7%B5%E3%82%AC%E3%82%A4%E3%83%89-%EF%BD%9ERuby%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8B-%E9%80%B2%E5%8C%96%E3%81%97%E3%81%A4%E3%81%A5%E3%81%91%E3%82%8B%E6%9F%94%E8%BB%9F%E3%81%AA%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%82%B2%E3%81%A6%E6%96%B9-Sandi-Metz-ebook/dp/B01L8SEVYI/ref=sr_1_1?ie=UTF8&amp;qid=1534550680&amp;sr=8-1&amp;keywords=%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E8%A8%AD%E8%A8%88%E3%82%AC%E3%82%A4%E3%83%89" target="_blank">&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x601D;&#x8003;&#x8A2D;&#x8A08;&#x30AC;&#x30A4;&#x30C9;</a></p>
 
@@ -320,7 +307,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"変更がかんたんな設計","level":"1.4.1","depth":2,"previous":{"title":"chapter2 - 単一承認クラスの設計","level":"1.4","depth":1,"ref":"","articles":[{"title":"変更がかんたんな設計","level":"1.4.1","depth":2,"path":"docs/chapter2/1.md","ref":"docs/chapter2/1.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-sharing","hide-published-with","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"hide-published-with":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"ja","gitbook":"*"},"file":{"path":"docs/chapter2/1.md","mtime":"2018-08-18T09:59:40.221Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-18T10:08:59.563Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"変更がかんたんな設計","level":"1.2.1","depth":2,"next":{"title":"chapter2 - 依存関係を管理する","level":"1.3","depth":1,"ref":"","articles":[{"title":"依存関係を管理する","level":"1.3.1","depth":2,"path":"docs/chapter3/1.md","ref":"docs/chapter3/1.md","articles":[]}]},"previous":{"title":"chapter2 - 単一承認クラスの設計","level":"1.2","depth":1,"ref":"","articles":[{"title":"変更がかんたんな設計","level":"1.2.1","depth":2,"path":"docs/chapter2/1.md","ref":"docs/chapter2/1.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-sharing","hide-published-with","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"hide-published-with":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"ja","gitbook":"*"},"file":{"path":"docs/chapter2/1.md","mtime":"2018-08-19T14:26:53.168Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-26T03:44:53.489Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
